@@ -1,5 +1,6 @@
 package simwir.ct.tile;
 
+import simwir.ct.Debug;
 import simwir.ct.handler.TankHandler;
 import simwir.ct.lib.BlockReferences;
 import net.minecraft.tileentity.TileEntity;
@@ -14,10 +15,29 @@ public class TileSmallTank extends TileEntity implements IFluidHandler{
 	public final TankHandler tank = new TankHandler(BlockReferences.SMALL_TANK_UNC_NAME, BlockReferences.SMALL_TANK_CAPACITY, this);
 	private String currentFluid = null;
 	private int fluidAmount = 0;
+	private int fluidCheckCooldown = 0;
 	
 	/*
 	 * Custom code
 	 */
+	@Override
+	public void updateEntity() {
+		if(fluidCheckCooldown > 0){
+			fluidCheckCooldown--;
+		}
+	}
+	
+	public boolean printFluid(){
+		Debug.chatln("Checking if cooldown is met");
+		if(fluidCheckCooldown == 0){
+			fluidCheckCooldown = 200000;
+			Debug.chatln("Cooldown met, setting cooldown to " + fluidCheckCooldown);
+			return true;
+		}else{
+			Debug.chatln("Cooldown not met");
+			return false;
+		}
+	}
 	/**
 	 * @author simon
 	 * Checks if the fluid is equal to the fluid in the tank,
@@ -60,6 +80,20 @@ public class TileSmallTank extends TileEntity implements IFluidHandler{
 		}
 		
 	}
+	
+	/**
+	 * @author simon
+	 * Returns a boolean for wether or not the tank is empty
+	 * @return boolean -  returns true if the tank is empty, else true
+	 */
+	public boolean isTankEmpty(){
+		if(tank.getFluid() == null){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	/**
 	 * @author simon
 	 * Returns the amount of fluid inside the tank
