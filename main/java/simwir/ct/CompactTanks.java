@@ -29,6 +29,7 @@ public class CompactTanks {
 	public static Block smallTank;
 	// Defining Items
 	public static Item meter;
+	//Other
 	public static boolean debug;
 
 	@EventHandler
