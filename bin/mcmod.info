@@ -1,0 +1,16 @@
+[
+{
+  "modid": "ct",
+  "name": "Compact Tanks",
+  "description": "",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": "Simwir",
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

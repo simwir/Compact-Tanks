@@ -3,6 +3,7 @@ package simwir.ct.tile;
 import simwir.ct.Debug;
 import simwir.ct.handler.TankHandler;
 import simwir.ct.lib.BlockReferences;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -15,29 +16,10 @@ public class TileSmallTank extends TileEntity implements IFluidHandler{
 	public final TankHandler tank = new TankHandler(BlockReferences.SMALL_TANK_UNC_NAME, BlockReferences.SMALL_TANK_CAPACITY, this);
 	private String currentFluid = null;
 	private int fluidAmount = 0;
-	private int fluidCheckCooldown = 0;
 	
 	/*
 	 * Custom code
 	 */
-	@Override
-	public void updateEntity() {
-		if(fluidCheckCooldown > 0){
-			fluidCheckCooldown--;
-		}
-	}
-	
-	public boolean printFluid(){
-		Debug.chatln("Checking if cooldown is met");
-		if(fluidCheckCooldown == 0){
-			fluidCheckCooldown = 200000;
-			Debug.chatln("Cooldown met, setting cooldown to " + fluidCheckCooldown);
-			return true;
-		}else{
-			Debug.chatln("Cooldown not met");
-			return false;
-		}
-	}
 	/**
 	 * @author simon
 	 * Checks if the fluid is equal to the fluid in the tank,
@@ -170,6 +152,22 @@ public class TileSmallTank extends TileEntity implements IFluidHandler{
 	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/*
+	 * NBT
+	 */
+	@Override
+	public void writeToNBT(NBTTagCompound par1nbtTagCompound) {
+		super.writeToNBT(par1nbtTagCompound);
+		par1nbtTagCompound.setString("fluid", FluidRegistry.getFluidName(tank.getFluid()));
+		par1nbtTagCompound.setInteger("fluidAmount", tank.getFluidAmount());
+	}
+	
+	@Override
+	public void readFromNBT(NBTTagCompound par1nbtTagCompund) {
+		super.readFromNBT(par1nbtTagCompund);
+		tank.setFluid(FluidRegistry.getFluidStack(par1nbtTagCompund.getString("fluid"), par1nbtTagCompund.getInteger("fluidAmount")));
 	}
 
 }

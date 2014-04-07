@@ -46,6 +46,7 @@ public class BlockSmallTank extends BlockContainer {
 		ItemStack heldtItem = par5EntityPlayer.inventory.getCurrentItem();
 		Debug.consoleln("Current fluid in tank: " + tileSmallTank.getFluidName());
 		Debug.consoleln("Amount of fluid in tank: " + tileSmallTank.getFluidAmount());
+		Debug.consoleln("Item in hand " + heldtItem);
 		if (tileSmallTank != null) {
 			/*
 			 * If the container is empty
@@ -78,20 +79,20 @@ public class BlockSmallTank extends BlockContainer {
 					tileSmallTank.fill(ForgeDirection.UNKNOWN, FluidContainerRegistry.getFluidForFilledItem(heldtItem), true);
 				}
 				return true;
-			}else if(heldtItem.isItemEqual(new ItemStack(CompactTanks.meter))){
-				Debug.consoleln("Fluid Meter found");
-				if(tileSmallTank.isTankEmpty()){
-					ChatHandler.sendToPlayer("The tank is empty", par5EntityPlayer);
-				}else{
-					if(!tileSmallTank.printFluid()){
-						ChatHandler.sendToPlayer("Current fluid in tank: " + tileSmallTank.getFluidName(), par5EntityPlayer);
-						ChatHandler.sendToPlayer("Amount of fluid in tank: " + tileSmallTank.getFluidAmount(), par5EntityPlayer);
-						return true;
-					}else{
-						Debug.consoleln("Can't print fluid");
+			} else if (heldtItem != null) {
+				if (heldtItem.isItemEqual(new ItemStack(CompactTanks.meter))) {
+					if (par1World.isRemote == false) {
+						Debug.consoleln("Fluid Meter found");
+						if (tileSmallTank.isTankEmpty()) {
+							ChatHandler.sendToPlayer("The tank is empty", par5EntityPlayer);
+						} else {
+							ChatHandler.sendToPlayer("Current fluid in tank: " + tileSmallTank.getFluidName(), par5EntityPlayer);
+							ChatHandler.sendToPlayer("Amount of fluid in tank: " + tileSmallTank.getFluidAmount(), par5EntityPlayer);
+							return true;
+						}
 					}
 				}
-			}else {
+			} else {
 				if (!par1World.isRemote) {
 					// TODO add code for GUI here
 					return true;
