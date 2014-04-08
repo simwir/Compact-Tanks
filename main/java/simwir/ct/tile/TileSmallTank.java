@@ -1,5 +1,6 @@
 package simwir.ct.tile;
 
+import simwir.ct.CompactTanks;
 import simwir.ct.Debug;
 import simwir.ct.handler.TankHandler;
 import simwir.ct.lib.BlockReferences;
@@ -13,7 +14,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileSmallTank extends TileEntity implements IFluidHandler{
-	public final TankHandler tank = new TankHandler(BlockReferences.SMALL_TANK_UNC_NAME, BlockReferences.SMALL_TANK_CAPACITY, this);
+	public final TankHandler tank = new TankHandler(BlockReferences.SMALL_TANK_UNC_NAME,CompactTanks.smallCapacity, this);
 	private String currentFluid = null;
 	private int fluidAmount = 0;
 	

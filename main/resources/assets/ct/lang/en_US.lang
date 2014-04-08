@@ -1,2 +1,6 @@
 tile.waterSource.name=Water Source
 tile.smallTank.name=Small Tank
+tile.medTank.name=Medium Tank
+tile.largeTank.name=Large Tank
+
+item.itemMeter.name=Tank Gauge

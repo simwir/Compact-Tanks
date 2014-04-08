@@ -3,6 +3,8 @@ package simwir.ct;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
+import simwir.ct.blocks.BlockLargeTank;
+import simwir.ct.blocks.BlockMedTank;
 import simwir.ct.blocks.BlockSmallTank;
 import simwir.ct.blocks.BlockWaterSource;
 import simwir.ct.handler.CraftingHandler;
@@ -10,6 +12,8 @@ import simwir.ct.items.ItemMeter;
 import simwir.ct.lib.BlockReferences;
 import simwir.ct.lib.ItemReferences;
 import simwir.ct.lib.References;
+import simwir.ct.tile.TileLargeTank;
+import simwir.ct.tile.TileMedTank;
 import simwir.ct.tile.TileSmallTank;
 import simwir.ct.tile.TileWaterSource;
 import cpw.mods.fml.common.Mod;
@@ -27,8 +31,14 @@ public class CompactTanks {
 	// Defining blocks
 	public static Block waterSource;
 	public static Block smallTank;
+	public static Block medTank;
+	public static Block largeTank;
 	// Defining Items
 	public static Item meter;
+	//Capacity
+	public static int smallCapacity;
+	public static int medCapacity;
+	public static int largeCapacity;
 	//Other
 	public static boolean debug;
 
@@ -37,12 +47,21 @@ public class CompactTanks {
 
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
+		config.addCustomCategoryComment("Capacity", References.CAPACITY_CONFIG_CATEGORY_COMMENT);
+		smallCapacity = config.get("Capacity", "Small Tank", BlockReferences.SMALL_TANK_CAPACITY).getInt();
+		if(smallCapacity==-1){smallCapacity=BlockReferences.SMALL_TANK_CAPACITY;}
+		medCapacity = config.get("Capacity", "Medium Tank", BlockReferences.MED_TANK_CAPACITY).getInt();
+		if(medCapacity==-1){medCapacity=BlockReferences.MED_TANK_CAPACITY;}
+		largeCapacity = config.get("Capacity", "Large Tank", BlockReferences.LARGE_TANK_CAPACITY).getInt();
+		if(largeCapacity==-1){largeCapacity=BlockReferences.LARGE_TANK_CAPACITY;}
 		debug = config.get("Other", "Debug", false, References.DEBUG_CONFIG_COMMENT).getBoolean(false);
 		config.save();
 		// Adding blocks and items to the actual game
 		// Blocks
 		waterSource = new BlockWaterSource();
 		smallTank = new BlockSmallTank();
+		medTank = new BlockMedTank();
+		largeTank = new BlockLargeTank();
 		// Items
 		meter = new ItemMeter();
 		gameRegisters();
@@ -62,6 +81,8 @@ public class CompactTanks {
 		// Registers blocks to the game.
 		GameRegistry.registerBlock(waterSource, BlockReferences.WATER_SOURCE_UNC_NAME);
 		GameRegistry.registerBlock(smallTank, BlockReferences.SMALL_TANK_UNC_NAME);
+		GameRegistry.registerBlock(medTank, BlockReferences.MED_TANK_UNC_NAME);
+		GameRegistry.registerBlock(largeTank, BlockReferences.LARGE_TANK_UNC_NAME);
 		//Registeres items to the game
 		GameRegistry.registerItem(meter, ItemReferences.ITEM_METER_UNC_NAME);
 	}
@@ -69,5 +90,7 @@ public class CompactTanks {
 
 		GameRegistry.registerTileEntity(TileWaterSource.class, BlockReferences.WATER_SOURCE_TE_KEY);
 		GameRegistry.registerTileEntity(TileSmallTank.class, BlockReferences.SMALL_TANK_TE_KEY);
+		GameRegistry.registerTileEntity(TileMedTank.class, BlockReferences.MED_TANK_TE_KEY);
+		GameRegistry.registerTileEntity(TileLargeTank.class, BlockReferences.LARGE_TANK_TE_KEY);
 	}
 }
