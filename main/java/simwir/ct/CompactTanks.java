@@ -8,6 +8,7 @@ import simwir.ct.blocks.BlockMedTank;
 import simwir.ct.blocks.BlockSmallTank;
 import simwir.ct.blocks.BlockWaterSource;
 import simwir.ct.handler.CraftingHandler;
+import simwir.ct.items.ItemEnderBucket;
 import simwir.ct.items.ItemMeter;
 import simwir.ct.lib.BlockReferences;
 import simwir.ct.lib.ItemReferences;
@@ -35,6 +36,7 @@ public class CompactTanks {
 	public static Block largeTank;
 	// Defining Items
 	public static Item meter;
+	public static Item enderBucket;
 	//Capacity
 	public static int smallCapacity;
 	public static int medCapacity;
@@ -64,6 +66,7 @@ public class CompactTanks {
 		largeTank = new BlockLargeTank();
 		// Items
 		meter = new ItemMeter();
+		enderBucket = new ItemEnderBucket();
 		gameRegisters();
 	}
 	@EventHandler
@@ -85,6 +88,7 @@ public class CompactTanks {
 		GameRegistry.registerBlock(largeTank, BlockReferences.LARGE_TANK_UNC_NAME);
 		//Registeres items to the game
 		GameRegistry.registerItem(meter, ItemReferences.ITEM_METER_UNC_NAME);
+		GameRegistry.registerItem(enderBucket, ItemReferences.ENDER_BUCKET_UNC_NAME);
 	}
 	private void registerTileEntities() {
 

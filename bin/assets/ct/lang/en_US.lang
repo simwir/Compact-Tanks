@@ -4,3 +4,4 @@ tile.medTank.name=Medium Tank
 tile.largeTank.name=Large Tank
 
 item.itemMeter.name=Tank Gauge
+item.enderBucket.name=Ender Bucket
